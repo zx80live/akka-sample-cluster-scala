@@ -14,6 +14,10 @@ Usage
 
 `./bin/activator "runMain sample.cluster.messenger.AdminFrontend 2551"`
 
+or
+
+`./bin/admin"`
+
 The following commands available in stdin console:
 
     > nodes             - list of nodes
@@ -29,3 +33,6 @@ The following commands available in stdin console:
 
 `./bin/activator "runMain sample.cluster.messenger.NodeWorker 3001"`
 
+or
+
+`./bin/node`
