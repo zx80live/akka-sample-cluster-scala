@@ -27,10 +27,6 @@ Usage
 
 `./bin/activator "runMain sample.cluster.messenger.AdminFrontend 2551"`
 
-or
-
-`./bin/admin`
-
 The following commands available in StdIn console (where admin was started) at any time. 
 The caret of input is not shown. Just input text any time:
 
@@ -63,18 +59,14 @@ The caret of input is not shown. Just input text any time:
 
 `./bin/activator "runMain sample.cluster.messenger.NodeWorker 3001"`
 
-or
-
-`./bin/node`
-
 Screenshots:
 ------------
 
-Admin frontend console (`./bin/admin`):
+Admin frontend console (`./bin/activator "runMain sample.cluster.messenger.AdminFrontend 2551"`):
 ![picture alt](https://raw.githubusercontent.com/zx80live/zx80live.github.io/master/img/s1.png "Admin frontend console")
 Evaluating process in admin frontend console (after `eval` command). As shown - the predicted cluster performance is 1379.0 with cluster configuration (nodes = 20, timeout = 100ms):
 ![picture alt](https://raw.githubusercontent.com/zx80live/zx80live.github.io/master/img/s2.png "Evaluating process in admin frontend console")
-Node actor console which was run on another JVM (`./bin/node`):
+Node actor console which was run on another JVM (`./bin/activator "runMain sample.cluster.messenger.NodeWorker 3001"`):
 ![picture alt](https://raw.githubusercontent.com/zx80live/zx80live.github.io/master/img/s3.png "Node actor console")
 
 Actors:

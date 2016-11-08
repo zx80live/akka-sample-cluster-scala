@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-activator "runMain sample.cluster.messenger.AdminFrontend 2551"
