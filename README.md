@@ -18,6 +18,10 @@ Usage
 
 `cd ./akka-sample-cluster-scala`
 
+3) Set file permissions:
+
+`chmod 774 ./bin/*`
+
 3) Run cluster admin (only `2551` port):
 
 `./bin/activator "runMain sample.cluster.messenger.AdminFrontend 2551"`
