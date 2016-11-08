@@ -16,6 +16,7 @@ class NodeWorker(messagePeriod: Long, messageTimeout: Long) extends ClusterNode 
 
   override val nodeRole: String = "worker"
 
+  //TODO create RoutingLogic implementation based on cached cluster statistic
   override def routingLogic: RoutingLogic = BroadcastRoutingLogic()
 
   override val cluster = Cluster(context.system)
