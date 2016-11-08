@@ -41,6 +41,7 @@ The following commands available in StdIn console (where admin was started) at a
                  example: `del 1 3 5`
                           
  * `del addr`  - delete node by full unique actor address, 
+                 
                  example: `del akka.tcp://ClusterSystem@127.0.0.1:50936/user/worker`
                           
  * `del all`   - delete all nodes
