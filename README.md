@@ -37,7 +37,8 @@ The following commands available in stdin console:
     > add               - add node in current JVM
     > del all           - delete all nodes
     > del N             - delete particular nodes, example: del 1 3 5
-    > del addr          - delete node by full unique actor address, example: del akka.tcp://ClusterSystem@127.0.0.1:50936/user/worker
+    > del addr          - delete node by full unique actor address, 
+                          example: del akka.tcp://ClusterSystem@127.0.0.1:50936/user/worker
     > exit
 
 
