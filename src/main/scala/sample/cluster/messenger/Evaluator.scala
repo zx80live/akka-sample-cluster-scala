@@ -1,34 +1,44 @@
 package sample.cluster.messenger
 
-import akka.actor.{ActorRef, Cancellable}
+import akka.actor.{Actor, ActorRef}
 import akka.cluster.Cluster
-import akka.routing.{BroadcastRoutingLogic, RoutingLogic}
+import akka.cluster.ClusterEvent.MemberUp
 import akka.util.Timeout
+import sample.cluster.messenger.AdminCommands._
+import sample.cluster.util.ConsoleCSS._
 
 import scala.concurrent.duration._
 
-class Evaluator(admin: ActorRef) extends ClusterNode with ClusterHelper {
+class Evaluator(admin: ActorRef) extends Actor {
 
   import context.dispatcher
 
-  override val cluster: Cluster = Cluster(context.system)
-  override val nodeRole: String = "worker"
+  val cluster: Cluster = Cluster(context.system)
 
-  override def routingLogic: RoutingLogic = BroadcastRoutingLogic()
+  override def preStart(): Unit = cluster.subscribe(self, classOf[MemberUp])
 
-  private var tickTask = {
-    val periodTime = 1500.millisecond
+  override def postStop(): Unit = cluster.unsubscribe(self)
 
-    context.system.scheduler.schedule(periodTime, periodTime) {
-      implicit val t = Timeout(2000.millisecond)
+  context.system.scheduler.scheduleOnce(1.seconds)(requestNewNode)
 
-      admin ! AddMember
-    }
+  def requestNewNode():Unit = {
+    admin.tell(AddNode, self)
+    println(s"Evaluator: request new node".attr(Foreground.Blue))
   }
 
-  override val customEvents: Receive = {
+  override def receive = {
+    case MemberUp(m) if m.hasRole("worker") =>
+      context.system.scheduler.scheduleOnce(1.seconds, self, "wait..")
+      admin.tell(GetClusterStatistic, self)
 
-    case _ =>
+    case StopEval =>
+      println(" -- Stop eval".attr(Foreground.LightBlue))
 
+    case NoClusterStatistic =>
+      println(" -- NoClusterStatistic".attr(Foreground.DarkGray))
+
+    case s@ClusterStatisticResult(xs) =>
+      println(s" -- nodes=${s.nodes}, avg=${s.averageCount}, min=${s.minCount}, max=${s.maxCount}, p=${s.period}, timeout=${s.timeout}".attr(Foreground.Yellow))
+      requestNewNode()
   }
 }

@@ -53,7 +53,7 @@ abstract class ClusterNode extends Actor with ActorLogging {
 
   def isEmptyRoutees: Boolean = routees.isEmpty
 
-  override def preStart(): Unit = cluster.subscribe(self, classOf[ClusterDomainEvent])
+  override def preStart(): Unit = cluster.subscribe(self, classOf[MemberUp], classOf[MemberRemoved])
 
   override def postStop(): Unit = cluster.unsubscribe(self)
 

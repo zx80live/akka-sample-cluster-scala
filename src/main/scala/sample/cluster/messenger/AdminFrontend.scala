@@ -20,13 +20,16 @@ class AdminFrontend extends ClusterNode with ClusterHelper {
   override val cluster: Cluster = Cluster(context.system)
 
   override val customEvents: Receive = {
+    case StopEval =>
+      evaluator.foreach(_ ! StopEval)
+
     case Hello =>
       broadcast("hello", nodeRole, self)
 
     case ViewNodes => onViewNodes()
     case DeleteNode(address) => onDeleteNode(address)
     case AddNode => onAddNode()
-    case GetClusterStatistic => onClusterStatistic(self)
+    case GetClusterStatistic => onClusterStatistic(sender())
     case NoClusterStatistic =>
       println(s"No statistic because cluster is empty".attr(Foreground.Yellow))
 
@@ -78,6 +81,8 @@ class AdminFrontend extends ClusterNode with ClusterHelper {
       withFallback(ConfigFactory.load())
     val system = ActorSystem("ClusterSystem", config)
     system.actorOf(Props[NodeWorker], nodeRole)
+
+    sender() ! NodeAdded
   }
 
   def onClusterStatistic(consumer: ActorRef): Unit = {
@@ -98,8 +103,11 @@ class AdminFrontend extends ClusterNode with ClusterHelper {
   }
 
   def onEval(): Unit = {
-    //TODO eval
+    val a = context.system.actorOf(Props(new Evaluator(self)), name = "eval")
+    evaluator = Some(a)
   }
+
+  var evaluator: Option[ActorRef] = None
 }
 
 
@@ -108,8 +116,8 @@ object AdminFrontend {
     val port = args.headOption.getOrElse("0")
     val config = ConfigFactory.parseString(s"akka.remote.netty.tcp.port=$port").
       withFallback(ConfigFactory.parseString("akka.cluster.roles = [frontend]")).
-      //withFallback(ConfigFactory.parseString("akka.loglevel = OFF")).
-      //withFallback(ConfigFactory.parseString("akka.stdout-loglevel = OFF")).
+      withFallback(ConfigFactory.parseString("akka.loglevel = OFF")).
+      withFallback(ConfigFactory.parseString("akka.stdout-loglevel = OFF")).
       withFallback(ConfigFactory.load())
 
     val system = ActorSystem("ClusterSystem", config)
@@ -124,7 +132,7 @@ object AdminFrontend {
           system.terminate()
           ok = false
         case Success(EmptyCommand) =>
-        case Success(cmd) => admin ! cmd
+        case Success(cmd) => admin.tell(cmd, admin)
         case Failure(e) =>
           println(e.getMessage.attr(Foreground.Red))
 

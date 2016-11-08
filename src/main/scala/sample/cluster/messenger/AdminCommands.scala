@@ -12,6 +12,8 @@ object AdminCommands {
 
   case object NodeAdded extends AdminCommand
 
+  case object StopEval extends AdminCommand
+
   case object Exit extends AdminCommand
 
   case object ViewNodes extends AdminCommand
@@ -47,6 +49,7 @@ object AdminCommands {
     case "add" => Success(AddNode)
     case "help" => Success(Help)
     case "eval" => Success(Eval)
+    case "stopEval" | "stop" => Success(StopEval)
     case "hello" => Success(Hello)
     case "exit" | "quit" | "e" | "q" => Success(Exit)
     case c if c.isEmpty => Success(EmptyCommand)
