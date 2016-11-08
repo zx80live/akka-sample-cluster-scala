@@ -29,7 +29,8 @@ or
 
 `./bin/admin`
 
-The following commands available in StdIn console (where admin was started) at any time:
+The following commands available in StdIn console (where admin was started) at any time. 
+The caret of input is not shown. Just input text any time:
 
  * `nodes`     - list of nodes
     
@@ -73,3 +74,11 @@ Evaluating process in admin frontend console (after `eval` command). As shown - 
 ![picture alt](https://raw.githubusercontent.com/zx80live/zx80live.github.io/master/img/s2.png "Evaluating process in admin frontend console")
 Node actor console which was run on another JVM (`./bin/node`):
 ![picture alt](https://raw.githubusercontent.com/zx80live/zx80live.github.io/master/img/s3.png "Node actor console")
+
+Actors:
+-------
+`sample.cluster.messenger.ClusterNode` - abstract class with base functional for working with cluster.
+`sample.cluster.messenger.NodeWorker` - messenger actor which sends the messages to another nodes.
+`sample.cluster.messenger.AdminFrontend` - frontend with StdIn interface.
+`sample.cluster.messenger.Evaluator` - evaluate cluster performance.
+`sample.cluster.messenger.StatisticAggregator` - aggregate performance statistic from cluster.
