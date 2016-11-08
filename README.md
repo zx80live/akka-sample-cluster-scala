@@ -77,8 +77,8 @@ Node actor console which was run on another JVM (`./bin/node`):
 
 Actors:
 -------
-`sample.cluster.messenger.ClusterNode` - abstract class with base functional for working with cluster.
-`sample.cluster.messenger.NodeWorker` - messenger actor which sends the messages to another nodes.
-`sample.cluster.messenger.AdminFrontend` - frontend with StdIn interface.
-`sample.cluster.messenger.Evaluator` - evaluate cluster performance.
-`sample.cluster.messenger.StatisticAggregator` - aggregate performance statistic from cluster.
+ * `sample.cluster.messenger.ClusterNode` - abstract class with base functional for working with cluster.
+ * `sample.cluster.messenger.NodeWorker` - messenger actor which sends the messages to another nodes.
+ * `sample.cluster.messenger.AdminFrontend` - frontend with StdIn interface.
+ * `sample.cluster.messenger.Evaluator` - evaluate cluster performance.
+ * `sample.cluster.messenger.StatisticAggregator` - aggregate performance statistic from cluster.
