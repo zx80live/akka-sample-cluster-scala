@@ -5,7 +5,6 @@ Requirements
 -----------------------------
 - Scala: 2.11.8
 - JRE:   8
-- Linux (recommended for colorized stdout)
 
 Usage
 -----------------------------
