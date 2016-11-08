@@ -22,7 +22,7 @@ Usage
 
 `chmod 774 ./bin/*`
 
-3) Run cluster admin (only `2551` port):
+4) Run cluster admin (only `2551` port):
 
 `./bin/activator "runMain sample.cluster.messenger.AdminFrontend 2551"`
 
@@ -41,7 +41,7 @@ The following commands available in stdin console:
     > exit
 
 
-4) Run cluster node on another JVM with arbitrary port:
+5) Run cluster node on another JVM with arbitrary port:
 
 `./bin/activator "runMain sample.cluster.messenger.NodeWorker 3001"`
 
