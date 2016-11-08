@@ -10,7 +10,7 @@ import sample.cluster.util.MessageCounter
 
 import scala.concurrent.duration._
 
-class NodeWorker extends ClusterNode {
+class NodeWorker(messagePeriod: Long, messageTimeout: Long) extends ClusterNode {
 
   import context.dispatcher
 
@@ -19,10 +19,10 @@ class NodeWorker extends ClusterNode {
   override def routingLogic: RoutingLogic = BroadcastRoutingLogic()
 
   override val cluster = Cluster(context.system)
-  private val statistic = MessageCounter(5000)
+  private val statistic = MessageCounter(periodInMillis = 1000)
 
-  private var period: Long = 1000
-  private var timeoutMs: Long = 2000
+  private var period: Long = messagePeriod
+  private var timeoutMs: Long = messageTimeout
   private var tickTask = startTickTask()
 
   private def startTickTask(): Cancellable = {

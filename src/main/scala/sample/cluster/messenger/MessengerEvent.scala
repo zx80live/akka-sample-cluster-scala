@@ -7,7 +7,7 @@ case class Message(text: String) extends MessengerEvent
 case object GetStatistic extends MessengerEvent
 
 case class Statistic(address: String, count: Long, periodInMillis: Long, timeout: Long) extends MessengerEvent {
-  override def toString: String = s"$count per $periodInMillis:$timeout ms for $address"
+  override def toString: String = s"$count during the last $periodInMillis ms, timeout=$timeout ms for $address"
 }
 
 case object AddMember extends MessengerEvent

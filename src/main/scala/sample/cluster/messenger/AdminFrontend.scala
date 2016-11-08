@@ -19,9 +19,14 @@ class AdminFrontend extends ClusterNode with ClusterHelper {
 
   override val cluster: Cluster = Cluster(context.system)
 
+  private var messagePeriod: Long = 10
+  private var messageTimeout: Long = 100
+
   override val customEvents: Receive = {
     case StopEval =>
-      evaluator.foreach(_ ! StopEval)
+      evaluator.foreach(e => context.stop(e))
+      evaluator = None
+      self ! DeleteNode("all")
 
     case Hello =>
       broadcast("hello", nodeRole, self)
@@ -35,9 +40,12 @@ class AdminFrontend extends ClusterNode with ClusterHelper {
 
     case s@ClusterStatisticResult(xs) => onStatisticResult(s)
     case Eval => onEval()
-    case SetInterval(period, timeout) =>
-      broadcast(SetPeriod(period, timeout), nodeRole)
-      println(s"set interval ${(period, timeout)}")
+    case SetInterval(p: Long, t: Long) =>
+      messagePeriod = p
+      messageTimeout = t
+
+      broadcast(SetPeriod(p, t), nodeRole)
+      println(s"set interval ${(p, t)}")
 
     case e =>
       println(s"Event $e".attr(Foreground.DarkGray))
@@ -80,7 +88,7 @@ class AdminFrontend extends ClusterNode with ClusterHelper {
       withFallback(ConfigFactory.parseString("akka.stdout-loglevel=OFF")).
       withFallback(ConfigFactory.load())
     val system = ActorSystem("ClusterSystem", config)
-    system.actorOf(Props[NodeWorker], nodeRole)
+    system.actorOf(Props(classOf[NodeWorker], messagePeriod, messageTimeout), nodeRole)
 
     sender() ! NodeAdded
   }
@@ -99,7 +107,7 @@ class AdminFrontend extends ClusterNode with ClusterHelper {
 
   def onStatisticResult(s: ClusterStatisticResult): Unit = {
     println(s.xs.map(e => s"$e".attr(Foreground.Yellow)).mkString("\n"))
-    println(s"avg: ${s.averageCount}, max: ${s.maxCount}, min: ${s.minCount}, period: ${s.period}, timeout: ${s.timeout}".attr(Foreground.Yellow))
+    println(s"avg: ${s.averageCount}, max: ${s.maxCount}, min: ${s.minCount}, during the last ${s.period} ms, timeout: ${s.timeout}".attr(Foreground.Yellow))
   }
 
   def onEval(): Unit = {
