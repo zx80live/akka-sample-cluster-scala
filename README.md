@@ -31,28 +31,28 @@ or
 
 The following commands available in StdIn console (where admin was started) at any time:
 
-    > nodes             - list of nodes
+    nodes             - list of nodes
     
-    > stat              - node statistics
+    stat              - node statistics
     
-    > add               - add node in current JVM
+    add               - add node in current JVM
     
-    > del N             - delete particular node by number, 
+    del N             - delete particular node by number, 
                           example: `del 1 3 5`
                           
-    > del addr          - delete node by full unique actor address, 
+    del addr          - delete node by full unique actor address, 
                           example: `del akka.tcp://ClusterSystem@127.0.0.1:50936/user/worker`
                           
-    > del all           - delete all nodes
+    del all           - delete all nodes
 
-    > int P T           - set messages period in ms (P) and timeout in ms (T) for all nodes
+    int P T           - set messages period in ms (P) and timeout in ms (T) for all nodes
                           example: `int 10 100`
                           
-    > eval              - start evaluator of cluster performance
+    eval              - start evaluator of cluster performance
     
-    > stopEval          - stop evaluator
+    stopEval          - stop evaluator
                          
-    > exit
+    exit
 
 
 5) Run cluster node on another JVM with arbitrary port:
