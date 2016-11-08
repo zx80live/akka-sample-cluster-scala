@@ -67,9 +67,9 @@ or
 Screenshots:
 ------------
 
-Admin frontend console:
+Admin frontend console (`./bin/admin`):
 ![picture alt](https://raw.githubusercontent.com/zx80live/zx80live.github.io/master/img/s1.png "Admin frontend console")
-Evaluating process in admin frontend console. As shown - the predicted cluster performance is 1379.0 with cluster configuration (nodes = 20, timeout = 100ms):
+Evaluating process in admin frontend console (after `eval` command). As shown - the predicted cluster performance is 1379.0 with cluster configuration (nodes = 20, timeout = 100ms):
 ![picture alt](https://raw.githubusercontent.com/zx80live/zx80live.github.io/master/img/s2.png "Evaluating process in admin frontend console")
-Node actor console which was run on another JVM:
+Node actor console which was run on another JVM (`./bin/node`):
 ![picture alt](https://raw.githubusercontent.com/zx80live/zx80live.github.io/master/img/s3.png "Node actor console")
