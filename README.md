@@ -9,19 +9,19 @@ Requirements
 Usage
 -----------------------------
 
-1) Clone repo:
+**1**) Clone repo:
 
 `git clone https://github.com/zx80live/akka-sample-cluster-scala`
 
-2) Change directory:
+**2**) Change directory:
 
 `cd ./akka-sample-cluster-scala`
 
-3) Set file permissions:
+**3**) Set file permissions:
 
 `chmod 774 ./bin/*`
 
-4) Run cluster admin (only `2551` port):
+**4**) Run cluster admin (only `2551` port):
 
 `./bin/activator "runMain sample.cluster.messenger.AdminFrontend 2551"`
 
@@ -56,7 +56,7 @@ The following commands available in StdIn console (where admin was started) at a
  * `exit`
 
 
-5) Run cluster node on another JVM with arbitrary port:
+**5**) Run cluster node on another JVM with arbitrary port:
 
 `./bin/activator "runMain sample.cluster.messenger.NodeWorker 3001"`
 
