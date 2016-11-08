@@ -16,7 +16,7 @@ Usage
 
 or
 
-`./bin/admin"`
+`./bin/admin`
 
 The following commands available in stdin console:
 
