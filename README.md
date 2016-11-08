@@ -63,3 +63,10 @@ The following commands available in StdIn console (where admin was started) at a
 or
 
 `./bin/node`
+
+Screenshots:
+------------
+
+![picture alt](https://raw.githubusercontent.com/zx80live/zx80live.github.io/master/img/s1.png "Admin frontend console")
+![picture alt](https://raw.githubusercontent.com/zx80live/zx80live.github.io/master/img/s2.png "Evaluating process in admin frontend console")
+![picture alt](https://raw.githubusercontent.com/zx80live/zx80live.github.io/master/img/s3.png "Node actor console")

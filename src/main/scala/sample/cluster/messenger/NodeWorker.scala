@@ -42,7 +42,7 @@ class NodeWorker(messagePeriod: Long, messageTimeout: Long) extends ClusterNode 
       period = p
       timeoutMs = t
       tickTask = startTickTask()
-      log.info(s"Set period ${(p, t)}".attr(Foreground.Cyan))
+      log.info(s"int ${(p, t)}".attr(Foreground.Cyan))
 
     case GetStatistic =>
       sender() ! Statistic(address(self), statistic.count, statistic.periodInMillis, timeoutMs)
@@ -67,6 +67,6 @@ object NodeWorker {
       withFallback(ConfigFactory.load())
 
     val system = ActorSystem("ClusterSystem", config)
-    system.actorOf(Props[NodeWorker], name = "worker")
+    system.actorOf(Props(classOf[NodeWorker], 10L, 100L), name = "worker")
   }
 }
