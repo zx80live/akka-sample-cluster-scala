@@ -1,0 +1,12 @@
+*.iml
+logs
+.idea
+.idea_modules
+project/project
+project/target
+target
+tmp
+dist
+.cache
+.settings
+
