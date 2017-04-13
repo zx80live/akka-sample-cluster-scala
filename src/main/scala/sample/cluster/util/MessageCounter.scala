@@ -10,7 +10,7 @@ import scala.language.postfixOps
 case class MessageCounter(periodInMillis: Long = 1000, statistic: Vector[Long] = Vector.empty[Long]) {
   type TimeMillis = Long
 
-  private var stat: Vector[TimeMillis] = statistic
+  @volatile private var stat: Vector[TimeMillis] = statistic
 
   def register(): Unit = {
     val current = System.currentTimeMillis()
