@@ -1,7 +1,7 @@
 import com.typesafe.sbt.SbtMultiJvm
 import com.typesafe.sbt.SbtMultiJvm.MultiJvmKeys.MultiJvm
 
-val akkaVersion = "2.4.12"
+val akkaVersion = "2.5.8"
 val projectName = "akka-sample-cluster-scala"
 
 val project = Project(id = projectName, base = file("."))
