@@ -15,7 +15,6 @@ val project = Project(id = projectName, base = file("."))
       "com.typesafe.akka" %% "akka-multi-node-testkit" % akkaVersion,
       "org.scalatest" %% "scalatest" % "3.0.0" % "test"
     ),
-    Keys.fork in run := true,
     Keys.connectInput in run := true
   )
 
