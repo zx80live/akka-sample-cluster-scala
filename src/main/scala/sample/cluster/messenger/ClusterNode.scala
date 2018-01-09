@@ -1,7 +1,7 @@
 package sample.cluster.messenger
 
 import akka.actor.{Actor, ActorLogging, ActorRef, ActorSelection, RootActorPath}
-import akka.cluster.ClusterEvent.{ClusterDomainEvent, MemberRemoved, MemberUp}
+import akka.cluster.ClusterEvent._
 import akka.cluster.{Cluster, Member}
 import akka.routing.{ActorRefRoutee, Routee, Router, RoutingLogic}
 import sample.cluster.util.ConsoleCSS.{Foreground, _}
@@ -26,7 +26,7 @@ abstract class ClusterNode extends Actor with ActorLogging {
       log.info("Handled RemoveSelfMember {}".attr(Foreground.Red), self)
       onSelfMemberRemoved()
 
-    case e@MemberRemoved(m, _) =>
+    case MemberRemoved(m, _) =>
       val a = selection(m)
       router = router.removeRoutee(a)
       onMemberRemoved(m)
@@ -39,6 +39,9 @@ abstract class ClusterNode extends Actor with ActorLogging {
         onMemberUp(m)
         log.info("Register member {}".attr(Foreground.Blue), m)
       }
+
+    case e: MemberEvent =>
+      log.info(Console.BLUE + s"cluster event: $e" + Console.RESET)
   }
 
   def onSelfMemberRemoved(): Unit = {}
@@ -53,7 +56,8 @@ abstract class ClusterNode extends Actor with ActorLogging {
 
   def isEmptyRoutees: Boolean = routees.isEmpty
 
-  override def preStart(): Unit = cluster.subscribe(self, classOf[MemberUp], classOf[MemberRemoved])
+  override def preStart(): Unit =
+    cluster.subscribe(self, initialStateMode = InitialStateAsEvents, classOf[MemberEvent], classOf[UnreachableMember])
 
   override def postStop(): Unit = cluster.unsubscribe(self)
 
