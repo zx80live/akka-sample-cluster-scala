@@ -23,9 +23,9 @@ Usage
 
 `chmod 774 ./bin/*`
 
-**4**) Run cluster admin (only `2551` port):
+**4**) Run cluster admin (`2551` port is used by default):
 
-`./bin/activator "runMain sample.cluster.messenger.AdminFrontend 2551"`
+`./bin/activator "runMain sample.cluster.messenger.AdminFrontend"`
 
 The following commands available in StdIn console (where admin was started) at any time. 
 The caret of input is not shown. Just input text any time:
