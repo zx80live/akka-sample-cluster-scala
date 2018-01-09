@@ -121,12 +121,10 @@ class AdminFrontend extends ClusterNode with ClusterHelper {
 
 object AdminFrontend {
   def main(args: Array[String]): Unit = {
-    val port = args.headOption.getOrElse("0")
-    val config = ConfigFactory.parseString(s"akka.remote.netty.tcp.port=$port").
-      withFallback(ConfigFactory.parseString("akka.cluster.roles = [frontend]")).
-      withFallback(ConfigFactory.parseString("akka.loglevel = OFF")).
-      withFallback(ConfigFactory.parseString("akka.stdout-loglevel = OFF")).
-      withFallback(ConfigFactory.load())
+    val config = ConfigFactory.parseString("akka.cluster.roles = [frontend]")
+      .withFallback(ConfigFactory.parseString("akka.loglevel = OFF"))
+      .withFallback(ConfigFactory.parseString("akka.stdout-loglevel = OFF"))
+      .withFallback(ConfigFactory.load())
 
     val system = ActorSystem("ClusterSystem", config)
     val admin = system.actorOf(Props[AdminFrontend], name = "frontend")
